@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ساخت کلمه</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: center;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px;
+        }
+        #letters {
+            margin: 20px;
+        }
+        .letter {
+            display: inline-block;
+            background-color: #ffffff;
+            border: 2px solid #4caf50;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 5px;
+            font-size: 24px;
+            cursor: pointer;
+            user-select: none;
+        }
+        #word-area {
+            border: 2px dashed #4caf50;
+            padding: 20px;
+            margin: 20px;
+            min-height: 50px;
+            font-size: 24px;
+        }
+        #save-area {
+            margin: 20px;
+            border: 2px solid #4caf50;
+            padding: 10px;
+            min-height: 50px;
+            background-color: #fff;
+            text-align: left;
+            overflow-y: auto;
+            max-height: 150px;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ساخت کلمه</h1>
+        <p>حروف را انتخاب کنید و کلمه بسازید!</p>
+    </header>
+
+    <div id="letters">
+        <span class="letter">آ</span>
+        <span class="letter">ا</span>
+        <span class="letter">ب</span>
+        <span class="letter">َ</span>
+        <span class="letter">م</span>
+        <span class="letter">س</span>
+        <span class="letter">و</span>
+        <span class="letter">ر</span>
+        <span class="letter">ت</span>
+        <span class="letter">ن</span>
+        <span class="letter">ی</span>
+        <span class="letter">ز</span>
+    </div>
+
+    <div id="word-area"></div>
+    <button id="clear">پاک کردن</button>
+    <button id="save">ذخیره کلمه</button>
+
+    <div id="save-area">
+        <h3>کلمات ذخیره‌شده:</h3>
+    </div>
+
+    <script>
+        const validWords = [
+            "زَرد", "سَبز", "سَرباز", "نَماز", "سوزَن", "میز", "زَمین", "بازار", "سَبزی", "بازو", "زَبان", "زانو", "زَنبور", "موز", "زَرافه",
+            "بازی", "زیبا", "زود", "آزار", "ریز", "روز"
+        ];
+
+        const letters = document.querySelectorAll('.letter');
+        const wordArea = document.getElementById('word-area');
+        const clearButton = document.getElementById('clear');
+        const saveButton = document.getElementById('save');
+        const saveArea = document.getElementById('save-area');
+
+        // Add letters to the word area
+        letters.forEach(letter => {
+            letter.addEventListener('click', () => {
+                wordArea.textContent += letter.textContent;
+            });
+        });
+
+        // Clear the word area
+        clearButton.addEventListener('click', () => {
+            wordArea.textContent = '';
+        });
+
+        // Save the word to the saved words area
+        saveButton.addEventListener('click', () => {
+            const word = wordArea.textContent.trim();
+            const wordElement = document.createElement('p');
+
+            if (word) {
+                if (validWords.includes(word)) {
+                    wordElement.textContent = word + " - صحیح ✅";
+                    wordElement.classList.add('correct');
+                } else {
+                    wordElement.textContent = word + " - اشتباه ❌";
+                    wordElement.classList.add('incorrect');
+                }
+                saveArea.appendChild(wordElement);
+                wordArea.textContent = '';
+            }
+        });
+    </script>
+</body>
+</html>
